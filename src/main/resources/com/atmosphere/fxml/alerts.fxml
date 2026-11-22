@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atmosphere.controller.AlertsController"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            styleClass="alerts-scroll">
+    <content>
+        <VBox spacing="20" styleClass="alerts-content">
+            <padding>
+                <Insets top="32" right="32" bottom="32" left="32" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="14">
+                <VBox spacing="5">
+                    <Label text="Intelligent Weather Alert Centre"
+                           styleClass="page-title" />
+                    <Label text="Actionable conditions across your registered cities"
+                           styleClass="page-subtitle" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <ProgressIndicator fx:id="refreshProgress"
+                                   prefWidth="24"
+                                   prefHeight="24"
+                                   visible="false"
+                                   managed="false" />
+                <Button fx:id="refreshButton"
+                        text="↻  Refresh"
+                        onAction="#handleRefresh"
+                        styleClass="search-button" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="12"
+                  styleClass="alerts-toolbar">
+                <Label fx:id="alertCountLabel"
+                       text="0 active · 0 unread"
+                       styleClass="metric-value" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label text="SEVERITY"
+                       styleClass="metric-label" />
+                <ComboBox fx:id="severityFilter"
+                          prefWidth="175"
+                          styleClass="search-field" />
+                <Button fx:id="markAllReadButton"
+                        text="Mark all as read"
+                        onAction="#markAllRead"
+                        styleClass="alert-read-button" />
+            </HBox>
+
+            <Label fx:id="refreshStatusLabel"
+                   text="Alerts are based on current conditions and upcoming forecasts."
+                   wrapText="true"
+                   styleClass="forecast-status" />
+
+            <VBox fx:id="alertCardsContainer" spacing="12" />
+
+            <Label text="Alert thresholds: AQI ≥ 4 · Rain ≥ 70% · Wind ≥ 40 km/h · Temperature ≥ 35°C or ≤ 5°C"
+                   wrapText="true"
+                   styleClass="activity-planner-note" />
+        </VBox>
+    </content>
+</ScrollPane>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atmosphere.controller.WeatherHistoryController"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            styleClass="weather-history-scroll">
+    <content>
+        <VBox spacing="20" styleClass="weather-history-content">
+            <padding>
+                <Insets top="32" right="32" bottom="32" left="32" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <VBox spacing="5">
+                    <Label text="Weather History &amp; Anomaly Detection"
+                           styleClass="page-title" />
+                    <Label text="Explore saved observations and meaningful changes over time"
+                           styleClass="page-subtitle" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="citySelector"
+                          prefWidth="190"
+                          promptText="Select city"
+                          styleClass="search-field" />
+                <Button text="↻  Refresh"
+                        onAction="#refreshSelectedCity"
+                        styleClass="search-button" />
+            </HBox>
+
+            <Label fx:id="historyStatusLabel"
+                   text="Select a city to view saved readings."
+                   wrapText="true"
+                   styleClass="forecast-status" />
+
+            <HBox spacing="16" alignment="TOP_CENTER">
+                <VBox HBox.hgrow="ALWAYS"
+                      spacing="12"
+                      styleClass="card history-chart-card">
+                    <Label text="TEMPERATURE HISTORY"
+                           styleClass="section-title" />
+                    <LineChart fx:id="temperatureChart"
+                               animated="false"
+                               createSymbols="true"
+                               legendVisible="false"
+                               minHeight="250"
+                               prefHeight="290"
+                               styleClass="history-line-chart">
+                        <xAxis>
+                            <CategoryAxis fx:id="temperatureTimeAxis"
+                                          side="BOTTOM"
+                                          tickLabelsVisible="true"
+                                          tickMarkVisible="false" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis fx:id="temperatureAxis"
+                                        side="LEFT"
+                                        forceZeroInRange="false"
+                                        minorTickVisible="false" />
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+
+                <VBox HBox.hgrow="ALWAYS"
+                      spacing="12"
+                      styleClass="card history-chart-card">
+                    <Label text="AIR QUALITY HISTORY"
+                           styleClass="section-title" />
+                    <LineChart fx:id="aqiChart"
+                               animated="false"
+                               createSymbols="true"
+                               legendVisible="false"
+                               minHeight="250"
+                               prefHeight="290"
+                               styleClass="history-line-chart">
+                        <xAxis>
+                            <CategoryAxis fx:id="aqiTimeAxis"
+                                          side="BOTTOM"
+                                          tickLabelsVisible="true"
+                                          tickMarkVisible="false" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis fx:id="aqiAxis"
+                                        side="LEFT"
+                                        forceZeroInRange="false"
+                                        minorTickVisible="false" />
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="12" styleClass="card history-anomalies-panel">
+                <Label text="DETECTED ANOMALIES"
+                       styleClass="section-title" />
+                <Label fx:id="anomalyStatusLabel"
+                       text="At least two successful snapshots are needed for comparison."
+                       wrapText="true"
+                       styleClass="activity-planner-note" />
+                <VBox fx:id="anomalyCardsContainer" spacing="10" />
+            </VBox>
+
+            <VBox spacing="12" styleClass="card history-table-panel">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="RECENT SNAPSHOTS"
+                           styleClass="section-title" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="Latest 20 readings"
+                           styleClass="activity-planner-note" />
+                </HBox>
+                <TableView fx:id="snapshotsTable"
+                           minHeight="240"
+                           prefHeight="360"
+                           styleClass="history-table" />
+            </VBox>
+        </VBox>
+    </content>
+</ScrollPane>

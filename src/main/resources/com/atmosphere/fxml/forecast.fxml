@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.atmosphere.controller.ForecastController"
+      spacing="24"
+      styleClass="forecast-content">
+
+    <padding>
+        <Insets top="32" right="32" bottom="32" left="32" />
+    </padding>
+
+    <!-- HEADER AND CITY SELECTOR -->
+    <HBox alignment="CENTER_LEFT" spacing="18">
+        <VBox spacing="5">
+            <Label text="5-Day Forecast"
+                   styleClass="forecast-page-title" />
+
+            <Label text="Temperature trends and daily breakdown"
+                   styleClass="subtitle" />
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS" />
+
+        <ComboBox fx:id="citySelector"
+                  promptText="Select city"
+                  prefWidth="200"
+                  styleClass="search-field" />
+    </HBox>
+
+    <!-- TEMPERATURE TREND CHART -->
+    <VBox spacing="14" styleClass="card forecast-chart-card">
+        <Label text="TEMPERATURE TREND"
+               styleClass="section-title" />
+
+        <Label fx:id="forecastStatusLabel"
+               text="Loading forecast..."
+               styleClass="forecast-status"
+               wrapText="true" />
+
+        <AreaChart fx:id="temperatureAreaChart"
+                   animated="false"
+                   legendVisible="true"
+                   createSymbols="false"
+                   horizontalGridLinesVisible="true"
+                   verticalGridLinesVisible="false"
+                   minHeight="290"
+                   prefHeight="330"
+                   maxWidth="Infinity"
+                   styleClass="forecast-area-chart">
+
+            <xAxis>
+                <CategoryAxis fx:id="dayAxis"
+                              label="Day"
+                              side="BOTTOM"
+                              gapStartAndEnd="false" />
+            </xAxis>
+
+            <yAxis>
+                <NumberAxis fx:id="temperatureAxis"
+                            label="Temperature"
+                            side="LEFT"
+                            forceZeroInRange="false"
+                            minorTickVisible="false" />
+            </yAxis>
+        </AreaChart>
+    </VBox>
+
+    <!-- DAILY BREAKDOWN CARDS -->
+    <VBox spacing="14">
+        <Label text="DAILY BREAKDOWN"
+               styleClass="section-title" />
+
+        <HBox fx:id="dayCardsContainer"
+              spacing="12"
+              alignment="TOP_CENTER"
+              styleClass="forecast-day-cards" />
+    </VBox>
+</VBox>
+

@@ -1,0 +1,69 @@
+
+/*
+ * AtmoSphere — animation-related JavaFX styles
+ *
+ * JavaFX CSS does not implement browser @keyframes, background-position,
+ * background-size, or transition declarations. The shimmer class below
+ * supplies the gradient surface; animate a separate highlight Region in Java
+ * with TranslateTransition or Timeline for the moving left-to-right effect.
+ */
+
+.motion-surface {
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(56, 189, 248, 0.08),
+        16px,
+        0.12,
+        0,
+        4px
+    );
+}
+
+/* Loading skeleton base with a three-stop shimmer gradient. */
+.shimmer {
+    -fx-background-color: linear-gradient(
+        to right,
+        #111827 0%,
+        #1E293B 50%,
+        #111827 100%
+    );
+    -fx-background-radius: 8px;
+    -fx-border-color: #1E293B;
+    -fx-border-radius: 8px;
+}
+
+/* Optional overlay/highlight node to translate across a .shimmer surface. */
+.shimmer-highlight {
+    -fx-background-color: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(148, 163, 184, 0.10) 50%,
+        transparent 100%
+    );
+    -fx-background-radius: 8px;
+    -fx-opacity: 0.9;
+    -fx-mouse-transparent: true;
+}
+
+/* Hover emphasis is immediate in JavaFX CSS; animate node properties in Java
+   if a timed transition is required. */
+.card:hover,
+.forecast-card:hover,
+.metric-card:hover,
+.hero-weather-card:hover {
+    -fx-border-color: rgba(56, 189, 248, 0.50);
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(56, 189, 248, 0.10),
+        18px,
+        0.12,
+        0,
+        4px
+    );
+}
+
+.nav-btn,
+.primary-button {
+    -fx-cursor: hand;
+}
+

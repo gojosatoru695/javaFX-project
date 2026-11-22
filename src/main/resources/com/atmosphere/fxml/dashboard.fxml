@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atmosphere.controller.DashboardController"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            styleClass="dashboard-scroll">
+
+    <content>
+        <VBox spacing="24" styleClass="dashboard-content">
+            <padding>
+                <Insets top="32" right="32" bottom="32" left="32" />
+            </padding>
+
+            <!-- ROW 1: PAGE HEADER AND CITY SEARCH -->
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <VBox spacing="5">
+                    <Label text="Dashboard" styleClass="dashboard-heading" />
+                    <Label text="Real-time weather intelligence"
+                           styleClass="subtitle" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <HBox alignment="CENTER" spacing="8">
+                    <TextField fx:id="citySearchField"
+                               promptText="Search city..."
+                               prefWidth="240"
+                               styleClass="search-field" />
+
+                    <Button fx:id="searchButton"
+                            text="Search"
+                            onAction="#handleSearch"
+                            styleClass="badge badge-blue search-button" />
+                </HBox>
+            </HBox>
+
+            <Label fx:id="feedbackLabel"
+                   text="Loading weather for Bengaluru, Mumbai and Delhi..."
+                   styleClass="dashboard-feedback"
+                   wrapText="true" />
+
+            <!-- AQI ALERT -->
+            <Label fx:id="alertBanner"
+                   text="AIR QUALITY ALERT"
+                   maxWidth="Infinity"
+                   visible="false"
+                   managed="false"
+                   styleClass="alert-banner"
+                   wrapText="true" />
+
+            <!-- ROW 2: TWO-COLUMN CITY WEATHER GRID -->
+            <GridPane fx:id="cityCardsGrid"
+                      hgap="16"
+                      vgap="16"
+                      maxWidth="Infinity"
+                      styleClass="city-cards-grid">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"
+                                        hgrow="ALWAYS"
+                                        fillWidth="true" />
+                    <ColumnConstraints percentWidth="50"
+                                        hgrow="ALWAYS"
+                                        fillWidth="true" />
+                </columnConstraints>
+            </GridPane>
+
+            <!-- ROW 3: OVERVIEW SECTION TITLE -->
+            <Label text="TODAY'S OVERVIEW"
+                   styleClass="section-title" />
+
+            <!-- ROW 4: THREE EQUAL-WIDTH OVERVIEW CARDS -->
+            <HBox spacing="16"
+                  alignment="TOP_CENTER"
+                  styleClass="overview-row">
+
+                <VBox spacing="12"
+                      HBox.hgrow="ALWAYS"
+                      prefWidth="270"
+                      maxWidth="Infinity"
+                      styleClass="card overview-card">
+
+                    <Label text="AVG TEMPERATURE"
+                           styleClass="stat-label" />
+
+                    <Label fx:id="averageTempLabel"
+                           text="--"
+                           styleClass="overview-value" />
+
+                    <LineChart fx:id="temperatureChart"
+                               animated="false"
+                               legendVisible="false"
+                               createSymbols="true"
+                               horizontalGridLinesVisible="false"
+                               verticalGridLinesVisible="false"
+                               minHeight="110"
+                               prefHeight="130"
+                               maxWidth="Infinity"
+                               styleClass="overview-chart">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM"
+                                          tickLabelsVisible="false"
+                                          tickMarkVisible="false"
+                                          opacity="0" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT"
+                                        forceZeroInRange="false"
+                                        tickLabelsVisible="false"
+                                        tickMarkVisible="false"
+                                        minorTickVisible="false"
+                                        opacity="0" />
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+
+                <VBox spacing="12"
+                      HBox.hgrow="ALWAYS"
+                      prefWidth="270"
+                      maxWidth="Infinity"
+                      styleClass="card overview-card">
+
+                    <Label text="WIND CONDITIONS"
+                           styleClass="stat-label" />
+
+                    <Label fx:id="windSummaryLabel"
+                           text="Waiting for live wind readings..."
+                           styleClass="overview-value-small"
+                           wrapText="true" />
+
+                    <VBox fx:id="windIndicatorsContainer" spacing="10" />
+                </VBox>
+
+                <VBox spacing="12"
+                      HBox.hgrow="ALWAYS"
+                      prefWidth="270"
+                      maxWidth="Infinity"
+                      styleClass="card overview-card">
+
+                    <Label text="AIR QUALITY INDEX"
+                           styleClass="stat-label" />
+
+                    <Label fx:id="aqiOverallLabel"
+                           text="--"
+                           styleClass="badge badge-blue overview-aqi-badge" />
+
+                    <Label fx:id="aqiSummaryLabel"
+                           text="Waiting for air-quality readings..."
+                           styleClass="overview-value-small"
+                           wrapText="true" />
+
+                    <Label text="OpenWeatherMap · AQI scale 1–5"
+                           styleClass="overview-footnote" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>
+
+

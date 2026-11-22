@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atmosphere.controller.ActivityPlannerController"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            styleClass="activity-planner-scroll">
+    <content>
+        <VBox spacing="22" styleClass="activity-planner-content">
+            <padding>
+                <Insets top="32" right="32" bottom="32" left="32" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="18">
+                <VBox spacing="5">
+                    <Label text="Smart Activity Planner"
+                           styleClass="page-title" />
+                    <Label text="Find a comfortable upcoming window for outdoor activity"
+                           styleClass="page-subtitle" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <VBox spacing="6">
+                    <Label text="ACTIVITY" styleClass="metric-label" />
+                    <ComboBox fx:id="activitySelector"
+                              prefWidth="155"
+                              promptText="Select activity"
+                              styleClass="search-field" />
+                </VBox>
+
+                <VBox spacing="6">
+                    <Label text="CITY" styleClass="metric-label" />
+                    <ComboBox fx:id="citySelector"
+                              prefWidth="190"
+                              promptText="Select city"
+                              styleClass="search-field" />
+                </VBox>
+            </HBox>
+
+            <Label fx:id="activityWeightLabel"
+                   text="Scoring weights depend on the selected activity."
+                   styleClass="forecast-status"
+                   wrapText="true" />
+
+            <Label fx:id="plannerStatusLabel"
+                   text="Select an activity and city to build a plan."
+                   styleClass="status-text"
+                   wrapText="true" />
+
+            <HBox alignment="TOP_LEFT" spacing="16">
+                <VBox HBox.hgrow="ALWAYS"
+                      spacing="14"
+                      styleClass="card activity-best-card">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="BEST UPCOMING WINDOW"
+                               styleClass="section-title" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="bestScoreBadge"
+                               text="—"
+                               styleClass="badge badge-blue" />
+                    </HBox>
+
+                    <Label fx:id="bestTimeLabel"
+                           text="Waiting for forecast..."
+                           styleClass="page-title"
+                           wrapText="true" />
+
+                    <ProgressBar fx:id="bestScoreProgress"
+                                 maxWidth="Infinity"
+                                 progress="0"
+                                 styleClass="activity-score-progress" />
+
+                    <Label fx:id="bestWeatherLabel"
+                           styleClass="metric-value"
+                           wrapText="true" />
+
+                    <Label fx:id="bestExplanationLabel"
+                           styleClass="activity-planner-note"
+                           wrapText="true" />
+                </VBox>
+
+                <VBox minWidth="245"
+                      prefWidth="285"
+                      spacing="12"
+                      styleClass="card activity-aqi-card">
+                    <Label text="CURRENT AIR QUALITY"
+                           styleClass="section-title" />
+
+                    <Label fx:id="currentAqiValueLabel"
+                           text="—"
+                           styleClass="page-title" />
+
+                    <Label fx:id="currentAqiStatusLabel"
+                           text="Current reading only."
+                           styleClass="activity-planner-note"
+                           wrapText="true" />
+                </VBox>
+            </HBox>
+
+            <VBox spacing="12" styleClass="card activity-slots-panel">
+                <Label text="NEXT AVAILABLE FORECAST SLOTS"
+                       styleClass="section-title" />
+
+                <Label text="Forecast weather and precipitation probability are shown for each time. Scores use the current AQI above as context; future AQI is not available."
+                       styleClass="activity-planner-note"
+                       wrapText="true" />
+
+                <VBox fx:id="slotCardsContainer" spacing="10" />
+            </VBox>
+        </VBox>
+    </content>
+</ScrollPane>
