@@ -46,6 +46,30 @@
                         onAction="#showForecast"
                         styleClass="nav-btn" />
 
+                <Button fx:id="comparisonButton"
+                        text="◈  City Comparison"
+                        maxWidth="Infinity"
+                        onAction="#showComparison"
+                        styleClass="nav-btn" />
+
+                <Button fx:id="weatherDnaButton"
+                        text="◈  Weather DNA"
+                        maxWidth="Infinity"
+                        onAction="#showWeatherDna"
+                        styleClass="nav-btn" />
+
+                <Button fx:id="airQualityButton"
+                        text="◈  Air Quality"
+                        maxWidth="Infinity"
+                        onAction="#showAirQuality"
+                        styleClass="nav-btn" />
+
+                <Button fx:id="aiInsightsButton"
+                        text="◈  AI Insights"
+                        maxWidth="Infinity"
+                        onAction="#showAiInsights"
+                        styleClass="nav-btn" />
+
                 <Button fx:id="activityPlannerButton"
                         text="◈  Activity Planner"
                         maxWidth="Infinity"
@@ -62,18 +86,6 @@
                         text="◈  Weather History"
                         maxWidth="Infinity"
                         onAction="#showWeatherHistory"
-                        styleClass="nav-btn" />
-
-                <Button fx:id="airQualityButton"
-                        text="◈  Air Quality"
-                        maxWidth="Infinity"
-                        onAction="#showAirQuality"
-                        styleClass="nav-btn" />
-
-                <Button fx:id="aiInsightsButton"
-                        text="◈  AI Insights"
-                        maxWidth="Infinity"
-                        onAction="#showAiInsights"
                         styleClass="nav-btn" />
 
                 <Region VBox.vgrow="ALWAYS" />

@@ -4,6 +4,7 @@ package com.atmosphere.controller;
 import com.atmosphere.config.AppConfig;
 import com.atmosphere.model.ForecastData;
 import com.atmosphere.service.CityRegistry;
+import com.atmosphere.service.PersonalComfortScorer;
 import com.atmosphere.service.WeatherService;
 import com.atmosphere.util.CardHoverEffects;
 import com.atmosphere.util.TemperatureStyler;
@@ -89,6 +90,14 @@ public class ForecastController {
 
                     if (!lastForecast.isEmpty()) {
                         renderTemperatureChart(lastForecast);
+                        renderDayCards(lastForecast);
+                    }
+                }
+        );
+
+        AppConfig.weatherPreferenceProfileProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (!lastForecast.isEmpty()) {
                         renderDayCards(lastForecast);
                     }
                 }
@@ -344,6 +353,22 @@ public class ForecastController {
         description.setAlignment(Pos.CENTER);
         description.setMaxWidth(Double.MAX_VALUE);
 
+        PersonalComfortScorer.ForecastSuitability suitability =
+                PersonalComfortScorer.scoreForecastDay(
+                        AppConfig.getWeatherPreferenceProfile(),
+                        forecast
+                );
+
+        Label dnaBadge = new Label(
+                "DNA " + suitability.score() + "% · " + suitability.label()
+        );
+        String badgeClass = suitability.score() >= 75 ? "badge-optimal" : suitability.score() >= 55 ? "badge-moderate" : "badge-harsh";
+        dnaBadge.getStyleClass().addAll(
+                "badge",
+                badgeClass,
+                "forecast-dna-suitability"
+        );
+
         Label rainChance = new Label(
                 "☂ "
                         + Math.max(
@@ -359,14 +384,17 @@ public class ForecastController {
                 "forecast-rain-badge"
         );
 
+        HBox badges = new HBox(6, rainChance, dnaBadge);
+        badges.setAlignment(Pos.CENTER);
+
         VBox card = new VBox(
-                11,
+                10,
                 dayName,
                 weatherIcon,
                 highTemperature,
                 lowTemperature,
                 description,
-                rainChance
+                badges
         );
 
         card.setAlignment(Pos.CENTER);

@@ -1,90 +1,106 @@
-
 /*
- * AtmoSphere — premium dark design system
- *
- * JavaFX looked-up colors use the -fx- prefix. The tokens below are defined
- * on .root so they can be referenced by every descendant in the scene graph.
+ * AtmoSphere — Premium Atmospheric Observatory Design System
+ * Deep graphite foundation (#0B0F13, #141B21, #1B252D, #29353D)
+ * Accents: #80D6C5 (Atmospheric Mint), #F2BB72 (Warm Solar), #EF7D7D (Alert Coral)
  */
 
 .root {
-    -fx-base: #0A0F1E;
-    -fx-background: #0A0F1E;
-    -fx-background-color: #0A0F1E;
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 14px;
+    -fx-base: #0B0F13;
+    -fx-background: #0B0F13;
+    -fx-background-color: #0B0F13;
+    -fx-font-family: "Manrope", "Inter", "Segoe UI", -apple-system, sans-serif;
+    -fx-font-size: 13px;
 
-    /* Design tokens (JavaFX looked-up colors). */
-    -fx-primary-bg: #0A0F1E;
-    -fx-card-bg: #111827;
-    -fx-card-border: #1E293B;
-    -fx-sidebar-bg: #070C18;
-    -fx-accent: #38BDF8;
-    -fx-accent-dim: #0EA5E9;
-    -fx-text-primary: #F1F5F9;
-    -fx-text-secondary: #94A3B8;
-    -fx-success: #10B981;
-    -fx-warning: #F59E0B;
-    -fx-danger: #EF4444;
-    -fx-purple: #8B5CF6;
+    /* Design tokens */
+    -fx-primary-bg: #0B0F13;
+    -fx-card-bg: #141B21;
+    -fx-card-elevated: #1B252D;
+    -fx-card-border: #29353D;
+    -fx-card-border-subtle: #1F2933;
+    -fx-sidebar-bg: #0B0F13;
+    -fx-accent: #80D6C5;
+    -fx-accent-dim: #60B3A3;
+    -fx-accent-warm: #F2BB72;
+    -fx-danger: #EF7D7D;
+    -fx-success: #80D6C5;
+    -fx-warning: #F2BB72;
+    -fx-text-primary: #F0F3F4;
+    -fx-text-secondary: #99A6AD;
+    -fx-text-muted: #6B7880;
 }
 
 /* -------------------------------------------------------------------------
-   Root surfaces and application chrome
+   Root surfaces & Application Shell
    ------------------------------------------------------------------------- */
 
 .app-shell,
 .content-stage,
 .dashboard-content,
 .dashboard-scroll,
-.dashboard-scroll > .viewport {
+.dashboard-scroll > .viewport,
+.content-area,
+.screen-root {
     -fx-background-color: -fx-primary-bg;
 }
 
-.top-bar {
-    -fx-padding: 18px 34px 18px 34px;
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: -fx-primary-bg;
+}
+
+/* Custom scrollbars */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+    -fx-pref-height: 8px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #24303A;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: -fx-accent;
+}
+
+.scroll-bar .track,
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Sidebar & Observatory Chrome
+   ------------------------------------------------------------------------- */
+
+.sidebar {
+    -fx-min-width: 236px;
+    -fx-pref-width: 236px;
+    -fx-max-width: 236px;
+    -fx-padding: 24px 14px 20px 14px;
     -fx-background-color: -fx-sidebar-bg;
-    -fx-border-color: transparent transparent -fx-card-border transparent;
-    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: transparent -fx-card-border transparent transparent;
+    -fx-border-width: 0 1px 0 0;
 }
 
-.brand-mark {
-    -fx-min-width: 42px;
-    -fx-min-height: 42px;
-    -fx-max-width: 42px;
-    -fx-max-height: 42px;
-    -fx-background-color: linear-gradient(
-        to bottom right,
-        -fx-accent,
-        -fx-purple
-    );
-    -fx-background-radius: 12px;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(56, 189, 248, 0.20),
-        18px,
-        0.16,
-        0,
-        4px
-    );
+.app-title,
+.brand-name {
+    -fx-font-size: 19px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -fx-text-primary;
+    -fx-letter-spacing: 0.5px;
 }
 
-.brand-mark-letter {
-    -fx-font-size: 21px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-primary-bg;
-}
-
-.brand-name,
-.app-title {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-accent;
-}
-
-.brand-caption {
+.observatory-tag {
     -fx-font-size: 9px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-secondary;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-accent;
+    -fx-background-color: rgba(128, 214, 197, 0.12);
+    -fx-background-radius: 4px;
+    -fx-padding: 2px 6px;
 }
 
 .subtitle,
@@ -94,386 +110,409 @@
     -fx-text-fill: -fx-text-secondary;
 }
 
-.live-indicator {
-    -fx-padding: 8px 12px 8px 12px;
-    -fx-background-color: #102B27;
-    -fx-background-radius: 20px;
-    -fx-border-color: #185344;
-    -fx-border-radius: 20px;
-}
-
-.live-dot {
-    -fx-min-width: 7px;
-    -fx-min-height: 7px;
-    -fx-max-width: 7px;
-    -fx-max-height: 7px;
-    -fx-background-color: -fx-success;
-    -fx-background-radius: 50%;
-}
-
-.live-label {
-    -fx-font-size: 10px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #6EE7B7;
-}
-
-/* -------------------------------------------------------------------------
-   Sidebar and navigation
-   ------------------------------------------------------------------------- */
-
-.sidebar {
-    -fx-min-width: 220px;
-    -fx-pref-width: 220px;
-    -fx-max-width: 220px;
-    -fx-padding: 24px 16px 24px 16px;
-    -fx-background-color: -fx-sidebar-bg;
-    -fx-border-color: transparent -fx-card-border transparent transparent;
-    -fx-border-width: 0 1px 0 0;
-}
-
 .nav-btn {
     -fx-max-width: infinity;
     -fx-alignment: CENTER_LEFT;
     -fx-background-color: transparent;
-    -fx-background-radius: 8px;
+    -fx-background-radius: 6px;
     -fx-border-color: transparent;
     -fx-border-width: 0 0 0 3px;
-    -fx-border-radius: 0 8px 8px 0;
+    -fx-border-radius: 0 6px 6px 0;
     -fx-text-fill: -fx-text-secondary;
-    -fx-padding: 12px 16px 12px 16px;
-    -fx-font-size: 14px;
+    -fx-padding: 10px 14px 10px 14px;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
     -fx-cursor: hand;
 }
 
 .nav-btn:hover {
-    -fx-background-color: #1E293B;
+    -fx-background-color: -fx-card-bg;
     -fx-text-fill: -fx-text-primary;
 }
 
 .nav-btn.active {
-    -fx-background-color: linear-gradient(
-        to right,
-        #1E3A5F,
-        #1E293B
-    );
-    -fx-background-radius: 0 8px 8px 0;
+    -fx-background-color: -fx-card-elevated;
     -fx-border-color: transparent transparent transparent -fx-accent;
     -fx-border-width: 0 0 0 3px;
     -fx-text-fill: -fx-accent;
-    -fx-font-weight: bold;
+    -fx-font-weight: 700;
+}
+
+.sidebar-clock {
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-primary;
+    -fx-padding: 4px 0 0 0;
+}
+
+.settings-button {
+    -fx-max-width: infinity;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: transparent;
+    -fx-background-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-padding: 10px 14px 10px 14px;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.settings-button:hover {
+    -fx-background-color: -fx-card-bg;
+    -fx-text-fill: -fx-accent;
 }
 
 /* -------------------------------------------------------------------------
-   Cards and common typography
+   Cards & Visual Hierarchy
    ------------------------------------------------------------------------- */
 
 .card,
 .hero-weather-card {
     -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-width: 1px;
-    -fx-border-radius: 12px;
-    -fx-padding: 20px;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0, 0, 0, 0.22),
-        18px,
-        0.10,
-        0,
-        5px
-    );
-}
-
-.card:hover,
-.hero-weather-card:hover {
-    /* JavaFX applies hover styles immediately; it has no CSS transition syntax. */
-    -fx-border-color: rgba(56, 189, 248, 0.50);
-}
-
-.city-name,
-.location-title {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.temperature-large,
-.hero-temperature {
-    -fx-font-size: 52px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.temperature-feels,
-.feels-like {
-    -fx-font-size: 13px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.stat-label,
-.metric-label {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-secondary;
-    /* JavaFX CSS has no text-transform or letter-spacing properties.
-       Use uppercase text in the FXML labels for the requested visual result. */
-}
-
-.stat-value,
-.metric-value {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.metric-value-small {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.metric-hint,
-.condition-text,
-.status-text {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.eyebrow,
-.section-title {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-secondary;
-    /* Keep the FXML text uppercase; JavaFX CSS does not provide letter-spacing. */
-}
-
-/* Optional larger title for page sections that need visual hierarchy. */
-.page-title {
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-/* -------------------------------------------------------------------------
-   Search field and buttons
-   ------------------------------------------------------------------------- */
-
-.search-field,
-.city-input {
-    -fx-background-color: #1E293B;
-    -fx-background-radius: 8px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-width: 1px;
-    -fx-border-radius: 8px;
-    -fx-text-fill: -fx-text-primary;
-    -fx-prompt-text-fill: -fx-text-secondary;
-    -fx-padding: 10px 16px 10px 16px;
-    -fx-font-size: 14px;
-}
-
-.search-field:focused,
-.city-input:focused {
-    -fx-border-color: -fx-accent;
-    -fx-background-color: #1E293B;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(56, 189, 248, 0.12),
-        8px,
-        0.12,
-        0,
-        0
-    );
-}
-
-.search-box {
-    -fx-padding: 6px;
-    -fx-background-color: -fx-card-bg;
     -fx-background-radius: 10px;
     -fx-border-color: -fx-card-border;
+    -fx-border-width: 1px;
     -fx-border-radius: 10px;
-}
-
-.primary-button {
-    -fx-background-color: -fx-accent;
-    -fx-background-radius: 8px;
-    -fx-text-fill: #061321;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 16px 10px 16px;
-    -fx-cursor: hand;
-}
-
-.primary-button:hover {
-    -fx-background-color: -fx-accent-dim;
-}
-
-.primary-button:disabled {
-    -fx-opacity: 0.55;
-}
-
-
-/* -------------------------------------------------------------------------
-   Badges and alerts
-   ------------------------------------------------------------------------- */
-
-.badge {
-    -fx-background-radius: 20px;
-    -fx-padding: 3px 10px 3px 10px;
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-}
-
-.badge-green {
-    -fx-background-color: #064E3B;
-    -fx-text-fill: -fx-success;
-}
-
-.badge-yellow {
-    -fx-background-color: #451A03;
-    -fx-text-fill: -fx-warning;
-}
-
-.badge-red {
-    -fx-background-color: #450A0A;
-    -fx-text-fill: -fx-danger;
-}
-
-.badge-blue {
-    -fx-background-color: #0C2340;
-    -fx-text-fill: -fx-accent;
-}
-
-.alert-banner {
-    -fx-background-color: -fx-danger;
-    -fx-background-radius: 0;
-    -fx-text-fill: white;
-    -fx-padding: 12px 20px 12px 20px;
-}
-
-.live-tag {
-    -fx-padding: 5px 9px 5px 9px;
-    -fx-background-color: #064E3B;
-    -fx-background-radius: 20px;
-    -fx-text-fill: -fx-success;
-    -fx-font-size: 9px;
-    -fx-font-weight: bold;
-}
-
-/* -------------------------------------------------------------------------
-   Dashboard-specific compatibility styles
-   ------------------------------------------------------------------------- */
-
-.hero-row {
-    -fx-alignment: TOP_CENTER;
-}
-
-.hero-weather-card {
-    -fx-min-height: 310px;
-    -fx-background-color: linear-gradient(
-        to bottom right,
-        #15243A,
-        #111827 72%,
-        #17233A
-    );
-    -fx-background-radius: 12px;
-    -fx-border-radius: 12px;
-}
-
-.hero-weather-icon {
-    -fx-font-size: 63px;
-    -fx-text-fill: -fx-warning;
-    -fx-padding: 0 8px 0 0;
-}
-
-.soft-separator {
-    -fx-background-color: -fx-card-border;
-    -fx-opacity: 0.9;
-}
-
-.soft-separator .line {
-    -fx-border-color: -fx-card-border;
-}
-
-.metrics-panel {
-    -fx-padding: 19px;
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
-}
-
-.metric-card {
-    -fx-padding: 15px;
-    -fx-background-color: #172235;
-    -fx-background-radius: 10px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 10px;
-    -fx-min-height: 112px;
-}
-
-.metric-card:hover {
-    -fx-border-color: rgba(56, 189, 248, 0.50);
-}
-
-.forecast-container {
-    -fx-padding: 0;
-}
-
-.forecast-card {
-    -fx-padding: 17px;
-    -fx-min-width: 150px;
-    -fx-pref-width: 150px;
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
+    -fx-padding: 18px;
     -fx-effect: dropshadow(
         gaussian,
-        rgba(0, 0, 0, 0.16),
-        12px,
+        rgba(0, 0, 0, 0.30),
+        14px,
         0.08,
         0,
         3px
     );
 }
 
-.forecast-card:hover {
-    -fx-border-color: rgba(56, 189, 248, 0.50);
+.card:hover,
+.hero-weather-card:hover,
+.forecast-card:hover,
+.metric-card:hover {
+    -fx-border-color: rgba(128, 214, 197, 0.45);
 }
 
-.forecast-day {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.forecast-icon {
-    -fx-font-size: 27px;
-    -fx-text-fill: -fx-warning;
-}
-
-.forecast-condition {
-    -fx-font-size: 10px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.forecast-temperatures {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
+.card-elevated {
+    -fx-background-color: -fx-card-elevated;
+    -fx-background-radius: 10px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 18px;
 }
 
 /* -------------------------------------------------------------------------
-   JavaFX charts
+   Typography
+   ------------------------------------------------------------------------- */
+
+.page-title,
+.forecast-page-title,
+.dashboard-heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.section-title,
+.eyebrow {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.city-name,
+.location-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.temperature-large,
+.hero-temperature {
+    -fx-font-family: "JetBrains Mono", "Manrope", monospace;
+    -fx-font-size: 46px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.temperature-feels,
+.feels-like {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.stat-label,
+.metric-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.stat-value,
+.metric-value {
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.metric-value-small {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.status-text,
+.metric-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* -------------------------------------------------------------------------
+   Badges, Tags & Categories
+   ------------------------------------------------------------------------- */
+
+.badge {
+    -fx-background-radius: 6px;
+    -fx-padding: 3px 9px 3px 9px;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+}
+
+.badge-optimal,
+.badge-favorable,
+.badge-green,
+.badge-blue {
+    -fx-background-color: rgba(128, 214, 197, 0.12);
+    -fx-border-color: rgba(128, 214, 197, 0.35);
+    -fx-text-fill: -fx-accent;
+}
+
+.badge-moderate,
+.badge-suboptimal,
+.badge-yellow {
+    -fx-background-color: rgba(242, 187, 114, 0.12);
+    -fx-border-color: rgba(242, 187, 114, 0.35);
+    -fx-text-fill: -fx-accent-warm;
+}
+
+.badge-harsh,
+.badge-danger,
+.badge-red {
+    -fx-background-color: rgba(239, 125, 125, 0.12);
+    -fx-border-color: rgba(239, 125, 125, 0.35);
+    -fx-text-fill: -fx-danger;
+}
+
+.alert-banner {
+    -fx-background-color: rgba(239, 125, 125, 0.15);
+    -fx-border-color: -fx-danger;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #FCA5A5;
+    -fx-padding: 12px 18px;
+    -fx-font-weight: 600;
+}
+
+/* -------------------------------------------------------------------------
+   Form Controls, Search & Inputs
+   ------------------------------------------------------------------------- */
+
+.search-field,
+.city-input,
+.text-field {
+    -fx-background-color: #141B21;
+    -fx-background-radius: 6px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-prompt-text-fill: -fx-text-muted;
+    -fx-padding: 8px 14px;
+    -fx-font-size: 13px;
+}
+
+.search-field:focused,
+.city-input:focused,
+.text-field:focused {
+    -fx-border-color: -fx-accent;
+    -fx-background-color: #1B252D;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(128, 214, 197, 0.18),
+        6px,
+        0.10,
+        0,
+        0
+    );
+}
+
+.combo-box.search-field,
+.combo-box {
+    -fx-background-color: #141B21;
+    -fx-background-radius: 6px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-padding: 2px 8px 2px 10px;
+}
+
+.combo-box.search-field:focused,
+.combo-box:focused {
+    -fx-border-color: -fx-accent;
+}
+
+.combo-box > .list-cell {
+    -fx-text-fill: -fx-text-primary;
+    -fx-background-color: transparent;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -fx-card-bg;
+    -fx-border-color: -fx-card-border;
+    -fx-border-radius: 6px;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: -fx-card-bg;
+    -fx-text-fill: -fx-text-primary;
+    -fx-padding: 8px 12px;
+}
+
+.combo-box-popup .list-cell:hover,
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #1B252D;
+    -fx-text-fill: -fx-accent;
+}
+
+.primary-button,
+.search-button {
+    -fx-background-color: -fx-accent;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #0B0F13;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+.primary-button:hover,
+.search-button:hover {
+    -fx-background-color: -fx-accent-dim;
+}
+
+.primary-button:disabled {
+    -fx-opacity: 0.50;
+}
+
+.secondary-button,
+.retry-button {
+    -fx-background-color: #1B252D;
+    -fx-background-radius: 6px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-padding: 7px 14px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover,
+.retry-button:hover {
+    -fx-background-color: #24303A;
+    -fx-border-color: -fx-accent;
+    -fx-text-fill: -fx-accent;
+}
+
+/* -------------------------------------------------------------------------
+   Sliders & Sliders Track (for Weather DNA)
+   ------------------------------------------------------------------------- */
+
+.slider .track {
+    -fx-background-color: #1F2933;
+    -fx-background-radius: 4px;
+    -fx-pref-height: 6px;
+}
+
+.slider .thumb {
+    -fx-background-color: -fx-accent;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 14px;
+    -fx-pref-height: 14px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 4px, 0.1, 0, 1);
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #9CE0D3;
+}
+
+/* -------------------------------------------------------------------------
+   City Weather Cards (Dashboard)
+   ------------------------------------------------------------------------- */
+
+.city-cards-grid {
+    -fx-background-color: transparent;
+}
+
+.city-weather-card {
+    -fx-spacing: 12px;
+    -fx-min-height: 254px;
+    -fx-pref-height: 254px;
+}
+
+.city-country {
+    -fx-font-size: 10px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.city-weather-emoji {
+    -fx-font-size: 32px;
+}
+
+.city-stats {
+    -fx-padding: 2px 0 2px 0;
+}
+
+.city-stat-row {
+    -fx-padding: 2px 0 2px 0;
+}
+
+.sun-time-label {
+    -fx-font-size: 9px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.sun-time-value {
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-font-size: 10px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.comfort-dna-badge {
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 6px;
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+}
+
+/* -------------------------------------------------------------------------
+   Charts (JavaFX AreaChart, LineChart)
    ------------------------------------------------------------------------- */
 
 .chart {
     -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.chart-content {
     -fx-padding: 0;
 }
 
@@ -483,7 +522,7 @@
 
 .chart-vertical-grid-lines,
 .chart-horizontal-grid-lines {
-    -fx-stroke: -fx-card-border;
+    -fx-stroke: -fx-card-border-subtle;
     -fx-stroke-width: 1px;
 }
 
@@ -502,19 +541,44 @@
     -fx-stroke-width: 2px;
 }
 
-/* JavaFX AreaChart uses chart-series-area-fill for the plotted area. */
 .area-chart-series,
 .chart-series-area-fill {
     -fx-fill: linear-gradient(
         to bottom,
-        rgba(56, 189, 248, 0.15),
-        rgba(56, 189, 248, 0.02)
+        rgba(128, 214, 197, 0.20),
+        rgba(128, 214, 197, 0.01)
     );
 }
 
 .chart-series-area-line {
     -fx-stroke: -fx-accent;
     -fx-stroke-width: 2px;
+}
+
+.forecast-area-chart .default-color0.chart-series-area-fill {
+    -fx-fill: linear-gradient(
+        to bottom,
+        rgba(128, 214, 197, 0.22),
+        rgba(128, 214, 197, 0.01)
+    );
+}
+
+.forecast-area-chart .default-color0.chart-series-area-line {
+    -fx-stroke: -fx-accent;
+    -fx-stroke-width: 2.2px;
+}
+
+.forecast-area-chart .default-color1.chart-series-area-fill {
+    -fx-fill: linear-gradient(
+        to bottom,
+        rgba(242, 187, 114, 0.16),
+        rgba(242, 187, 114, 0.01)
+    );
+}
+
+.forecast-area-chart .default-color1.chart-series-area-line {
+    -fx-stroke: -fx-accent-warm;
+    -fx-stroke-width: 1.8px;
 }
 
 .chart-legend {
@@ -525,724 +589,275 @@
     -fx-text-fill: -fx-text-secondary;
 }
 
-/* Sidebar clock used by the application navigation shell. */
-.sidebar-clock {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-    -fx-padding: 4px 0 0 0;
-}
-
-.content-area {
-    -fx-background-color: -fx-primary-bg;
-}
-
-
 /* -------------------------------------------------------------------------
-   Multi-city dashboard
+   Forecast Day Cards
    ------------------------------------------------------------------------- */
-
-.dashboard-heading {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.dashboard-feedback {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.search-button {
-    -fx-padding: 10px 16px 10px 16px;
-    -fx-cursor: hand;
-    -fx-border-color: transparent;
-    -fx-background-radius: 8px;
-}
-
-.search-button:hover,
-.retry-button:hover {
-    -fx-background-color: #12365A;
-}
-
-.city-cards-grid {
-    -fx-background-color: transparent;
-}
-
-.city-weather-card {
-    -fx-spacing: 14px;
-    -fx-min-height: 258px;
-    -fx-pref-height: 258px;
-}
-
-.city-country {
-    -fx-font-size: 10px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.city-weather-emoji {
-    -fx-font-size: 34px;
-    -fx-text-fill: -fx-warning;
-}
-
-.temperature-description {
-    -fx-font-size: 12px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.city-stats {
-    -fx-padding: 2px 0 2px 0;
-}
-
-.city-stat-row {
-    -fx-padding: 2px 0 2px 0;
-}
-
-.sun-time-label {
-    -fx-font-size: 9px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.sun-time-value {
-    -fx-font-size: 10px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.city-error-card {
-    -fx-border-color: rgba(239, 68, 68, 0.35);
-}
-
-.error-message {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.retry-button {
-    -fx-cursor: hand;
-    -fx-border-color: transparent;
-}
-
-.skeleton-card {
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
-}
-
-.skeleton-line {
-    -fx-fill: #1E293B;
-}
-
-.overview-row {
-    -fx-fill-height: true;
-}
-
-.overview-card {
-    -fx-min-height: 220px;
-    -fx-pref-height: 220px;
-}
-
-.overview-value {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.overview-value-small {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.overview-chart {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.overview-chart .chart-plot-background {
-    -fx-background-color: transparent;
-}
-
-.overview-chart .chart-series-line {
-    -fx-stroke: -fx-accent;
-    -fx-stroke-width: 2px;
-}
-
-.overview-chart .chart-line-symbol {
-    -fx-background-color: -fx-accent, -fx-card-bg;
-    -fx-background-insets: 0, 2;
-    -fx-background-radius: 5px;
-    -fx-padding: 4px;
-}
-
-.overview-indicator-row {
-    -fx-padding: 5px 0 5px 0;
-    -fx-border-color: transparent transparent -fx-card-border transparent;
-    -fx-border-width: 0 0 1px 0;
-}
-
-.overview-indicator-city {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.overview-indicator-value {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.overview-aqi-badge {
-    -fx-padding: 7px 12px 7px 12px;
-}
-
-.overview-footnote {
-    -fx-font-size: 10px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-/* -------------------------------------------------------------------------
-   Five-day forecast screen
-   ------------------------------------------------------------------------- */
-
-.forecast-content {
-    -fx-background-color: -fx-primary-bg;
-}
-
-.forecast-page-title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.forecast-chart-card {
-    -fx-padding: 22px;
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
-}
-
-.forecast-status {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.forecast-area-chart {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.forecast-area-chart .chart-plot-background {
-    -fx-background-color: transparent;
-}
-
-.forecast-area-chart .chart-vertical-grid-lines,
-.forecast-area-chart .chart-horizontal-grid-lines {
-    -fx-stroke: -fx-card-border;
-    -fx-stroke-width: 1px;
-}
-
-/* High temperature series: cyan accent. */
-.forecast-area-chart .default-color0.chart-series-area-fill {
-    -fx-fill: linear-gradient(
-        to bottom,
-        rgba(56, 189, 248, 0.24),
-        rgba(56, 189, 248, 0.025)
-    );
-}
-
-.forecast-area-chart .default-color0.chart-series-area-line {
-    -fx-stroke: -fx-accent;
-    -fx-stroke-width: 2.5px;
-}
-
-/* Low temperature series: purple. */
-.forecast-area-chart .default-color1.chart-series-area-fill {
-    -fx-fill: linear-gradient(
-        to bottom,
-        rgba(139, 92, 246, 0.18),
-        rgba(139, 92, 246, 0.02)
-    );
-}
-
-.forecast-area-chart .default-color1.chart-series-area-line {
-    -fx-stroke: -fx-purple;
-    -fx-stroke-width: 2px;
-}
-
-.forecast-area-chart .chart-legend {
-    -fx-background-color: transparent;
-}
-
-.forecast-area-chart .chart-legend-item {
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.forecast-day-cards {
-    -fx-alignment: TOP_CENTER;
-}
 
 .forecast-day-card {
-    -fx-pref-width: 160px;
-    -fx-min-width: 145px;
-    -fx-min-height: 230px;
+    -fx-pref-width: 164px;
+    -fx-min-width: 148px;
+    -fx-min-height: 240px;
     -fx-alignment: CENTER;
-    -fx-spacing: 11px;
+    -fx-spacing: 9px;
     -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
+    -fx-background-radius: 10px;
     -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
-    -fx-padding: 18px 12px 18px 12px;
-}
-
-
-.forecast-day-card:hover {
-    -fx-border-color: rgba(56, 189, 248, 0.50);
-}
-
-.activity-planner-scroll,
-.activity-planner-scroll > .viewport {
-    -fx-background-color: -fx-primary-bg;
-}
-
-.activity-planner-content {
-    -fx-background-color: -fx-primary-bg;
-}
-
-.activity-best-card {
-    -fx-background-color: linear-gradient(
-        to bottom right,
-        #132A43,
-        #111827
-    );
-    -fx-border-color: #24425F;
-}
-
-.activity-aqi-card {
-    -fx-background-color: #111827;
-}
-
-.activity-slots-panel {
-    -fx-padding: 20px;
-}
-
-.activity-slot-card {
-    -fx-padding: 14px 16px 14px 16px;
-}
-
-.activity-slot-time {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-accent;
-}
-
-.activity-factor-details,
-.activity-planner-note {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.activity-score-progress > .track {
-    -fx-background-color: #263244;
-    -fx-background-radius: 6px;
-}
-
-.activity-score-progress > .bar {
-    -fx-background-color: -fx-accent;
-    -fx-background-insets: 0;
-    -fx-background-radius: 6px;
-    -fx-padding: 5px;
-}
-
-.alerts-scroll,
-.alerts-scroll > .viewport,
-.alerts-content {
-    -fx-background-color: -fx-primary-bg;
-}
-
-.alerts-toolbar {
-    -fx-padding: 14px 16px 14px 16px;
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
-}
-
-.alert-card {
-    -fx-padding: 18px;
-    -fx-background-color: -fx-card-bg;
-}
-
-.alert-card-read {
-    -fx-opacity: 0.72;
-}
-
-.alert-card-title {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.alert-timeframe,
-.alert-city,
-.alert-explanation,
-.alert-precaution {
-    -fx-font-size: 12px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.alert-actual-value {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-accent;
-}
-
-.alert-precaution {
-    -fx-text-fill: #CBD5E1;
-}
-
-.alert-severity-badge {
-    -fx-font-weight: bold;
-}
-
-.severity-critical {
-    -fx-background-color: rgba(239, 68, 68, 0.18);
-    -fx-text-fill: #FCA5A5;
-}
-
-.severity-warning {
-    -fx-background-color: rgba(245, 158, 11, 0.18);
-    -fx-text-fill: #FCD34D;
-}
-
-.severity-information {
-    -fx-background-color: rgba(56, 189, 248, 0.18);
-    -fx-text-fill: #7DD3FC;
-}
-
-.alert-read-button {
-    -fx-background-color: #1F2937;
-    -fx-text-fill: -fx-text-secondary;
-    -fx-background-radius: 8px;
-    -fx-padding: 8px 12px 8px 12px;
-    -fx-cursor: hand;
-}
-
-.alert-read-button:hover {
-    -fx-background-color: #263449;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.alert-read-button:disabled {
-    -fx-opacity: 0.6;
-}
-
-.alert-empty-state {
-    -fx-padding: 38px 24px 38px 24px;
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 12px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 12px;
-    -fx-text-fill: -fx-text-secondary;
-    -fx-font-size: 14px;
-    -fx-alignment: CENTER;
-    -fx-max-width: Infinity;
-}
-
-.weather-history-scroll,
-.weather-history-scroll > .viewport,
-.weather-history-content {
-    -fx-background-color: -fx-primary-bg;
-}
-
-.history-chart-card,
-.history-anomalies-panel,
-.history-table-panel {
-    -fx-padding: 18px;
-    -fx-background-color: -fx-card-bg;
-}
-
-.history-line-chart .chart-plot-background {
-    -fx-background-color: transparent;
-}
-
-.history-line-chart .chart-vertical-grid-lines,
-.history-line-chart .chart-horizontal-grid-lines {
-    -fx-stroke: rgba(148, 163, 184, 0.13);
-}
-
-.history-anomaly-card {
-    -fx-padding: 14px 16px 14px 16px;
-    -fx-background-color: #111827;
-}
-
-.history-anomaly-title {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.history-anomaly-change {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-accent;
-}
-
-.history-anomaly-time {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.history-table {
-    -fx-background-color: -fx-card-bg;
-    -fx-control-inner-background: -fx-card-bg;
-    -fx-table-cell-border-color: rgba(148, 163, 184, 0.12);
-    -fx-text-background-color: -fx-text-primary;
-}
-
-.history-table .column-header-background {
-    -fx-background-color: #1B2638;
-}
-
-.history-table .column-header,
-.history-table .filler {
-    -fx-background-color: transparent;
-}
-
-.history-table .column-header .label {
-    -fx-text-fill: -fx-text-secondary;
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
+    -fx-border-radius: 10px;
+    -fx-padding: 16px 12px;
 }
 
 .forecast-day-name {
     -fx-font-size: 13px;
-    -fx-font-weight: bold;
+    -fx-font-weight: 700;
     -fx-text-fill: -fx-text-primary;
 }
 
-.forecast-weather-emoji {
-    -fx-font-size: 32px;
-}
-
 .forecast-high-temperature {
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
     -fx-text-fill: -fx-accent;
 }
 
 .forecast-low-temperature {
-    -fx-font-size: 14px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.forecast-description {
-    -fx-font-size: 12px;
-    -fx-text-fill: -fx-text-secondary;
-}
-
-.forecast-rain-badge {
-    -fx-padding: 5px 10px 5px 10px;
-}
-
-/* ComboBox shares the search-field token with TextField while keeping its
-   arrow button and popup readable on the dark surface. */
-.combo-box.search-field {
-    -fx-background-color: #1E293B;
-    -fx-background-radius: 8px;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 8px;
-    -fx-border-width: 1px;
-    -fx-padding: 2px 8px 2px 12px;
-}
-
-.combo-box.search-field:focused {
-    -fx-border-color: -fx-accent;
-}
-
-.combo-box.search-field > .list-cell {
-    -fx-text-fill: -fx-text-primary;
-    -fx-background-color: transparent;
-}
-
-.combo-box-popup .list-view {
-    -fx-background-color: -fx-card-bg;
-    -fx-border-color: -fx-card-border;
-}
-
-.combo-box-popup .list-cell {
-    -fx-background-color: -fx-card-bg;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.combo-box-popup .list-cell:hover,
-.combo-box-popup .list-cell:selected {
-    -fx-background-color: #1E3A5F;
-    -fx-text-fill: -fx-accent;
-}
-
-/* -------------------------------------------------------------------------
-   Air quality and AI insights screens
-   ------------------------------------------------------------------------- */
-
-.screen-root {
-    -fx-background-color: -fx-primary-bg;
-}
-
-.health-advisory-text {
-    -fx-font-size: 14px;
-    -fx-line-spacing: 3px;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.pollutant-card {
-    -fx-min-height: 118px;
-}
-
-.pollutant-progress {
-    -fx-pref-height: 8px;
-    -fx-background-color: #263244;
-    -fx-background-radius: 8px;
-}
-
-.pollutant-progress > .track {
-    -fx-background-color: #263244;
-    -fx-background-radius: 8px;
-}
-
-.pollutant-progress > .bar {
-    -fx-background-color: -fx-accent;
-    -fx-background-radius: 8px;
-    -fx-background-insets: 0;
-}
-
-.error-text {
-    -fx-font-size: 11px;
-    -fx-text-fill: -fx-danger;
-}
-
-.insight-sparkle {
-    -fx-font-size: 25px;
-}
-
-.insight-heading {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
-}
-
-.insight-text-area {
-    -fx-font-size: 16px;
-    -fx-line-spacing: 6px;
-    -fx-text-fill: -fx-text-primary;
-    -fx-control-inner-background: transparent;
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-border-color: transparent;
-    -fx-padding: 8px 2px 8px 2px;
-}
-
-.insight-text-area .content {
-    -fx-background-color: transparent;
-    -fx-padding: 8px 2px 8px 2px;
-}
-
-.insight-text-area .scroll-pane,
-.insight-text-area .scroll-pane .viewport {
-    -fx-background-color: transparent;
-}
-
-.typing-dot {
-    -fx-fill: -fx-accent;
-}
-
-/* -------------------------------------------------------------------------
-   Final polish: splash, settings and notifications
-   ------------------------------------------------------------------------- */
-
-.settings-button {
-    -fx-max-width: infinity;
-    -fx-alignment: CENTER_LEFT;
-    -fx-background-color: transparent;
-    -fx-background-radius: 8px;
-    -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-secondary;
-    -fx-padding: 10px 12px 10px 12px;
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
     -fx-font-size: 13px;
-    -fx-cursor: hand;
+    -fx-text-fill: -fx-text-secondary;
 }
 
-.settings-button:hover {
-    -fx-background-color: #1E293B;
+.forecast-dna-suitability {
+    -fx-font-size: 10px;
+    -fx-font-weight: 700;
+    -fx-padding: 2px 7px;
+    -fx-background-radius: 4px;
+}
+
+/* -------------------------------------------------------------------------
+   Feature Two: City Comparison Studio
+   ------------------------------------------------------------------------- */
+
+.comparison-winner-card {
+    -fx-background-color: linear-gradient(
+        to right,
+        #152826,
+        #141B21 65%
+    );
+    -fx-border-color: rgba(128, 214, 197, 0.40);
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+}
+
+.winner-crown {
+    -fx-font-size: 22px;
+}
+
+.winner-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
     -fx-text-fill: -fx-accent;
 }
+
+.winner-explanation {
+    -fx-font-size: 12px;
+    -fx-line-spacing: 2px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.compare-card {
+    -fx-background-color: -fx-card-bg;
+    -fx-background-radius: 10px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 16px;
+}
+
+.compare-card.winner {
+    -fx-border-color: -fx-accent;
+    -fx-background-color: #172428;
+}
+
+.diff-pill-best {
+    -fx-background-color: rgba(128, 214, 197, 0.15);
+    -fx-border-color: rgba(128, 214, 197, 0.4);
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-text-fill: -fx-accent;
+    -fx-font-size: 10px;
+    -fx-font-weight: 700;
+    -fx-padding: 2px 6px;
+}
+
+.diff-pill-worst {
+    -fx-background-color: rgba(239, 125, 125, 0.15);
+    -fx-border-color: rgba(239, 125, 125, 0.4);
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-text-fill: -fx-danger;
+    -fx-font-size: 10px;
+    -fx-font-weight: 700;
+    -fx-padding: 2px 6px;
+}
+
+.matrix-row {
+    -fx-padding: 8px 12px;
+    -fx-border-color: transparent transparent -fx-card-border-subtle transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.matrix-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* -------------------------------------------------------------------------
+   Feature One: Personal Weather DNA UI
+   ------------------------------------------------------------------------- */
+
+.dna-panel {
+    -fx-background-color: -fx-card-bg;
+    -fx-background-radius: 10px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-radius: 10px;
+    -fx-padding: 20px;
+}
+
+.dna-score-display {
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-font-size: 38px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -fx-accent;
+}
+
+.dna-factor-bar > .track {
+    -fx-background-color: #1F2933;
+    -fx-background-radius: 4px;
+}
+
+.dna-factor-bar > .bar {
+    -fx-background-color: -fx-accent;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Progress & Indicators
+   ------------------------------------------------------------------------- */
+
+.pollutant-progress > .track,
+.activity-score-progress > .track {
+    -fx-background-color: #1F2933;
+    -fx-background-radius: 6px;
+}
+
+.pollutant-progress > .bar,
+.activity-score-progress > .bar {
+    -fx-background-color: -fx-accent;
+    -fx-background-radius: 6px;
+    -fx-background-insets: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Dialogs, Splash & Overlays
+   ------------------------------------------------------------------------- */
 
 .splash-root {
-    -fx-background-color: #0A0F1E;
-    -fx-border-color: #1E293B;
+    -fx-background-color: #0B0F13;
+    -fx-border-color: #29353D;
     -fx-border-width: 1px;
     -fx-padding: 36px;
 }
 
 .splash-title {
-    -fx-font-size: 36px;
-    -fx-font-weight: bold;
+    -fx-font-size: 34px;
+    -fx-font-weight: 800;
     -fx-text-fill: -fx-accent;
 }
 
 .splash-subtitle {
-    -fx-font-size: 14px;
+    -fx-font-size: 13px;
     -fx-text-fill: -fx-text-secondary;
 }
 
 .splash-loading {
     -fx-font-size: 11px;
-    -fx-text-fill: #64748B;
+    -fx-text-fill: -fx-text-muted;
 }
 
 .splash-progress {
-    -fx-pref-height: 7px;
+    -fx-pref-height: 5px;
     -fx-accent: -fx-accent;
 }
 
 .settings-dialog {
-    -fx-background-color: -fx-card-bg;
+    -fx-background-color: #141B21;
 }
 
 .settings-dialog .header-panel {
-    -fx-background-color: -fx-sidebar-bg;
+    -fx-background-color: #0B0F13;
+    -fx-padding: 14px 18px;
+}
+
+.settings-dialog .header-panel .label {
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-primary;
 }
 
 .settings-dialog .label,
 .settings-label {
     -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
 }
 
 .settings-dialog .radio-button {
     -fx-text-fill: -fx-text-secondary;
-}
-
-.settings-dialog .text-field {
-    -fx-background-color: #1E293B;
-    -fx-text-fill: -fx-text-primary;
-    -fx-prompt-text-fill: -fx-text-secondary;
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
+    -fx-font-size: 12px;
 }
 
 .settings-dialog .button {
-    -fx-background-color: #1E293B;
+    -fx-background-color: #1B252D;
+    -fx-border-color: -fx-card-border;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
     -fx-text-fill: -fx-text-primary;
-    -fx-background-radius: 8px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 7px 16px;
 }
 
 .settings-dialog .button:default {
     -fx-background-color: -fx-accent;
-    -fx-text-fill: #082F49;
-    -fx-font-weight: bold;
+    -fx-border-color: -fx-accent;
+    -fx-text-fill: #0B0F13;
+    -fx-font-weight: 700;
+}
+
+.skeleton-card {
+    -fx-background-color: -fx-card-bg;
+    -fx-background-radius: 10px;
+    -fx-border-color: -fx-card-border;
+    -fx-border-radius: 10px;
+}
+
+.skeleton-line {
+    -fx-fill: #1B252D;
+}
+
+.insight-text-area {
+    -fx-font-size: 14px;
+    -fx-line-spacing: 5px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-control-inner-background: transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+}
+
+.typing-dot {
+    -fx-fill: -fx-accent;
 }

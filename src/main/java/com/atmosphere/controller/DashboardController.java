@@ -2,9 +2,11 @@
 package com.atmosphere.controller;
 
 import com.atmosphere.config.AppConfig;
+import com.atmosphere.model.PersonalComfortScore;
 import com.atmosphere.model.WeatherData;
 import com.atmosphere.model.WeatherSnapshot;
 import com.atmosphere.service.CityRegistry;
+import com.atmosphere.service.PersonalComfortScorer;
 import com.atmosphere.service.WeatherHistoryService;
 import com.atmosphere.service.WeatherService;
 import com.atmosphere.util.CardHoverEffects;
@@ -129,6 +131,11 @@ public class DashboardController {
         CardHoverEffects.install(aqiOverallLabel.getParent());
 
         AppConfig.fahrenheitProperty().addListener(
+                (observable, oldValue, newValue) ->
+                        refreshTemperatureDisplay()
+        );
+
+        AppConfig.weatherPreferenceProfileProperty().addListener(
                 (observable, oldValue, newValue) ->
                         refreshTemperatureDisplay()
         );
@@ -581,10 +588,24 @@ public class DashboardController {
                 aqiBadgeClass(weather.getAqi())
         );
 
+        PersonalComfortScore comfortScore = PersonalComfortScorer.score(
+                AppConfig.getWeatherPreferenceProfile(),
+                weather
+        );
+
+        Label comfortBadge = new Label(
+                "DNA " + comfortScore.totalScore() + "% · " + comfortScore.category().label()
+        );
+        comfortBadge.getStyleClass().addAll(
+                "badge",
+                comfortScore.category().badgeStyleClass()
+        );
+
         HBox footer = new HBox(
-                10,
+                8,
                 sunTimes,
                 footerSpacer,
+                comfortBadge,
                 aqiBadge
         );
 

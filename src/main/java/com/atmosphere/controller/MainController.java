@@ -58,6 +58,8 @@ public class MainController {
     private static final Map<String, String> SCREEN_FILES = Map.of(
             "dashboard", "dashboard.fxml",
             "forecast", "forecast.fxml",
+            "comparison", "comparison.fxml",
+            "weather-dna", "weather-dna.fxml",
             "activity-planner", "activity-planner.fxml",
             "alerts", "alerts.fxml",
             "weather-history", "weather-history.fxml",
@@ -69,6 +71,8 @@ public class MainController {
 
     @FXML private Button dashboardButton;
     @FXML private Button forecastButton;
+    @FXML private Button comparisonButton;
+    @FXML private Button weatherDnaButton;
     @FXML private Button activityPlannerButton;
     @FXML private Button alertsButton;
     @FXML private Button weatherHistoryButton;
@@ -110,11 +114,13 @@ public class MainController {
 
         navigationButtons.put("dashboard", dashboardButton);
         navigationButtons.put("forecast", forecastButton);
+        navigationButtons.put("comparison", comparisonButton);
+        navigationButtons.put("weather-dna", weatherDnaButton);
+        navigationButtons.put("air-quality", airQualityButton);
+        navigationButtons.put("ai-insights", aiInsightsButton);
         navigationButtons.put("activity-planner", activityPlannerButton);
         navigationButtons.put("alerts", alertsButton);
         navigationButtons.put("weather-history", weatherHistoryButton);
-        navigationButtons.put("air-quality", airQualityButton);
-        navigationButtons.put("ai-insights", aiInsightsButton);
     }
 
     private void loadScreen(String key) throws IOException {
@@ -176,6 +182,16 @@ public class MainController {
     @FXML
     private void showForecast() {
         navigate("forecast");
+    }
+
+    @FXML
+    private void showComparison() {
+        navigate("comparison");
+    }
+
+    @FXML
+    private void showWeatherDna() {
+        navigate("weather-dna");
     }
 
     @FXML
@@ -375,6 +391,14 @@ public class MainController {
         geminiLabel.getStyleClass().add("settings-label");
         unitLabel.getStyleClass().add("settings-label");
 
+        Label dnaLabel =
+                new Label("Personal Weather DNA");
+        dnaLabel.getStyleClass().add("settings-label");
+
+        Button openDnaBtn =
+                new Button("Configure Weather DNA Profile...");
+        openDnaBtn.getStyleClass().add("secondary-button");
+
         form.add(weatherLabel, 0, 0);
         form.add(weatherKeyField, 1, 0);
 
@@ -392,8 +416,17 @@ public class MainController {
 
         form.add(unitOptions, 1, 2);
 
+        form.add(dnaLabel, 0, 3);
+        form.add(openDnaBtn, 1, 3);
+
         Dialog<ButtonType> dialog =
                 new Dialog<>();
+
+        openDnaBtn.setOnAction(e -> {
+            dialog.setResult(ButtonType.CANCEL);
+            dialog.close();
+            showWeatherDna();
+        });
 
         dialog.setTitle("AtmoSphere Settings");
 
@@ -518,6 +551,12 @@ public class MainController {
             controller.refreshAlerts();
         }
 
+        Object comparison = screenControllers.get("comparison");
+
+        if (comparison instanceof ComparisonController controller) {
+            controller.renderAll();
+        }
+
         Object history = screenControllers.get("weather-history");
 
         if (history instanceof WeatherHistoryController controller) {
@@ -579,6 +618,12 @@ public class MainController {
                 value.dispose();
 
             } else if (controller instanceof ForecastController value) {
+                value.dispose();
+
+            } else if (controller instanceof ComparisonController value) {
+                value.dispose();
+
+            } else if (controller instanceof WeatherDnaController value) {
                 value.dispose();
 
             } else if (controller instanceof ActivityPlannerController value) {

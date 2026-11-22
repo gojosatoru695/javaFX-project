@@ -1,43 +1,37 @@
-
 /*
- * AtmoSphere — animation-related JavaFX styles
- *
- * JavaFX CSS does not implement browser @keyframes, background-position,
- * background-size, or transition declarations. The shimmer class below
- * supplies the gradient surface; animate a separate highlight Region in Java
- * with TranslateTransition or Timeline for the moving left-to-right effect.
+ * AtmoSphere — Observatory Micro-Interactions & Transitions
+ * Subtle, elegant motion via JavaFX timelines and state styles.
  */
 
 .motion-surface {
     -fx-effect: dropshadow(
         gaussian,
-        rgba(56, 189, 248, 0.08),
-        16px,
-        0.12,
+        rgba(128, 214, 197, 0.08),
+        14px,
+        0.10,
         0,
-        4px
+        3px
     );
 }
 
-/* Loading skeleton base with a three-stop shimmer gradient. */
+/* Loading skeleton with graphite observatory gradient */
 .shimmer {
     -fx-background-color: linear-gradient(
         to right,
-        #111827 0%,
-        #1E293B 50%,
-        #111827 100%
+        #141B21 0%,
+        #1F2B33 50%,
+        #141B21 100%
     );
     -fx-background-radius: 8px;
-    -fx-border-color: #1E293B;
+    -fx-border-color: #24303A;
     -fx-border-radius: 8px;
 }
 
-/* Optional overlay/highlight node to translate across a .shimmer surface. */
 .shimmer-highlight {
     -fx-background-color: linear-gradient(
         to right,
         transparent 0%,
-        rgba(148, 163, 184, 0.10) 50%,
+        rgba(128, 214, 197, 0.08) 50%,
         transparent 100%
     );
     -fx-background-radius: 8px;
@@ -45,25 +39,24 @@
     -fx-mouse-transparent: true;
 }
 
-/* Hover emphasis is immediate in JavaFX CSS; animate node properties in Java
-   if a timed transition is required. */
+/* Card hover glow */
 .card:hover,
-.forecast-card:hover,
-.metric-card:hover,
-.hero-weather-card:hover {
-    -fx-border-color: rgba(56, 189, 248, 0.50);
+.forecast-day-card:hover,
+.compare-card:hover,
+.dna-panel:hover {
+    -fx-border-color: rgba(128, 214, 197, 0.45);
     -fx-effect: dropshadow(
         gaussian,
-        rgba(56, 189, 248, 0.10),
-        18px,
-        0.12,
+        rgba(128, 214, 197, 0.12),
+        16px,
+        0.08,
         0,
-        4px
+        3px
     );
 }
 
 .nav-btn,
-.primary-button {
+.primary-button,
+.secondary-button {
     -fx-cursor: hand;
 }
-

@@ -89,7 +89,7 @@ public final class ToastNotifications {
         text.setWrapText(true);
         text.setMaxWidth(340);
         text.setStyle(
-                "-fx-text-fill: #F1F5F9;"
+                "-fx-text-fill: #F0F3F4;"
                         + "-fx-font-size: 12px;"
                         + "-fx-font-weight: 600;"
         );
@@ -97,13 +97,13 @@ public final class ToastNotifications {
         VBox toast = new VBox(text);
         toast.setMaxWidth(380);
         toast.setStyle(
-                "-fx-background-color: #111827;"
-                        + "-fx-border-color: #334155;"
+                "-fx-background-color: #141B21;"
+                        + "-fx-border-color: #29353D;"
                         + "-fx-border-width: 1px;"
-                        + "-fx-background-radius: 12px;"
-                        + "-fx-border-radius: 12px;"
+                        + "-fx-background-radius: 10px;"
+                        + "-fx-border-radius: 10px;"
                         + "-fx-padding: 14px 18px 14px 18px;"
-                        + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.42), 20px, 0.18, 0, 6px);"
+                        + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 18px, 0.12, 0, 4px);"
         );
 
         toast.setOpacity(0.0);

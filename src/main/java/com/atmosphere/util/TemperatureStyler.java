@@ -63,18 +63,18 @@ public final class TemperatureStyler {
 
     public static Color colorForCelsius(double celsius) {
         if (celsius < 10.0) {
-            return Color.web("#60A5FA");
+            return Color.web("#80D6C5");
         }
 
         if (celsius <= 25.0) {
-            return Color.web("#F1F5F9");
+            return Color.web("#F0F3F4");
         }
 
         if (celsius <= 35.0) {
-            return Color.web("#F59E0B");
+            return Color.web("#F2BB72");
         }
 
-        return Color.web("#EF4444");
+        return Color.web("#EF7D7D");
     }
 }
 

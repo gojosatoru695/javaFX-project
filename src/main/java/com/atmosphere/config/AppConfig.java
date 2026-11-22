@@ -1,8 +1,10 @@
-
 package com.atmosphere.config;
 
+import com.atmosphere.model.WeatherPreferenceProfile;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.EnumSet;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -38,8 +41,13 @@ public final class AppConfig {
     private static final BooleanProperty FAHRENHEIT =
             new SimpleBooleanProperty(false);
 
+    private static final ObjectProperty<WeatherPreferenceProfile> PREFERENCE_PROFILE_PROPERTY =
+            new SimpleObjectProperty<>(WeatherPreferenceProfile.defaultProfile());
+
     private static String openWeatherApiKey = "";
     private static String geminiApiKey = "";
+    private static WeatherPreferenceProfile preferenceProfile =
+            WeatherPreferenceProfile.defaultProfile();
 
     private static boolean loaded;
 
@@ -76,17 +84,86 @@ public final class AppConfig {
                 )
         );
 
+        double minTemp = parseDouble(
+                PROPERTIES.getProperty("weatherdna.temp.min"),
+                WeatherPreferenceProfile.DEFAULT_MIN_TEMP
+        );
+        double maxTemp = parseDouble(
+                PROPERTIES.getProperty("weatherdna.temp.max"),
+                WeatherPreferenceProfile.DEFAULT_MAX_TEMP
+        );
+        double minHumidity = parseDouble(
+                PROPERTIES.getProperty("weatherdna.humidity.min"),
+                WeatherPreferenceProfile.DEFAULT_MIN_HUMIDITY
+        );
+        double maxHumidity = parseDouble(
+                PROPERTIES.getProperty("weatherdna.humidity.max"),
+                WeatherPreferenceProfile.DEFAULT_MAX_HUMIDITY
+        );
+        double maxWind = parseDouble(
+                PROPERTIES.getProperty("weatherdna.wind.max"),
+                WeatherPreferenceProfile.DEFAULT_MAX_WIND
+        );
+
+        String aqiSensStr = PROPERTIES.getProperty(
+                "weatherdna.aqi.sensitivity",
+                WeatherPreferenceProfile.DEFAULT_AQI_SENSITIVITY.name()
+        );
+        WeatherPreferenceProfile.AirQualitySensitivity aqiSensitivity =
+                WeatherPreferenceProfile.DEFAULT_AQI_SENSITIVITY;
+        try {
+            if (aqiSensStr != null && !aqiSensStr.isBlank()) {
+                aqiSensitivity = WeatherPreferenceProfile.AirQualitySensitivity.valueOf(
+                        aqiSensStr.trim().toUpperCase(Locale.ROOT)
+                );
+            }
+        } catch (IllegalArgumentException ignored) {
+            // Keep default
+        }
+
+        preferenceProfile = new WeatherPreferenceProfile(
+                minTemp,
+                maxTemp,
+                minHumidity,
+                maxHumidity,
+                maxWind,
+                aqiSensitivity
+        );
+
+        PREFERENCE_PROFILE_PROPERTY.set(preferenceProfile.copy());
+
         loaded = true;
     }
 
     /**
      * Saves settings through a temporary file and replaces only the
-     * AtmoSphere-specific configuration.
+     * AtmoSphere-specific configuration, preserving other properties.
      */
     public static synchronized void save(
             String weatherKey,
             String aiKey,
             boolean fahrenheit
+    ) throws IOException {
+        saveAll(weatherKey, aiKey, fahrenheit, preferenceProfile);
+    }
+
+    /**
+     * Saves updated personal weather preferences, preserving API keys and temperature units.
+     */
+    public static synchronized void savePreferences(
+            WeatherPreferenceProfile profile
+    ) throws IOException {
+        saveAll(openWeatherApiKey, geminiApiKey, FAHRENHEIT.get(), profile);
+    }
+
+    /**
+     * Saves all application settings atomically.
+     */
+    public static synchronized void saveAll(
+            String weatherKey,
+            String aiKey,
+            boolean fahrenheit,
+            WeatherPreferenceProfile profile
     ) throws IOException {
 
         ensureLoaded();
@@ -94,6 +171,8 @@ public final class AppConfig {
         Files.createDirectories(CONFIG_DIRECTORY);
 
         Properties updated = new Properties();
+        // Preserve all previously saved properties
+        updated.putAll(PROPERTIES);
 
         updated.setProperty(
                 "openweathermap.apiKey",
@@ -108,6 +187,34 @@ public final class AppConfig {
         updated.setProperty(
                 "temperature.unit",
                 fahrenheit ? "F" : "C"
+        );
+
+        WeatherPreferenceProfile resolvedProfile =
+                profile == null ? WeatherPreferenceProfile.defaultProfile() : profile;
+
+        updated.setProperty(
+                "weatherdna.temp.min",
+                String.format(Locale.ENGLISH, "%.1f", resolvedProfile.getMinTemperatureCelsius())
+        );
+        updated.setProperty(
+                "weatherdna.temp.max",
+                String.format(Locale.ENGLISH, "%.1f", resolvedProfile.getMaxTemperatureCelsius())
+        );
+        updated.setProperty(
+                "weatherdna.humidity.min",
+                String.format(Locale.ENGLISH, "%.1f", resolvedProfile.getMinHumidityPercent())
+        );
+        updated.setProperty(
+                "weatherdna.humidity.max",
+                String.format(Locale.ENGLISH, "%.1f", resolvedProfile.getMaxHumidityPercent())
+        );
+        updated.setProperty(
+                "weatherdna.wind.max",
+                String.format(Locale.ENGLISH, "%.1f", resolvedProfile.getMaxComfortableWindKmh())
+        );
+        updated.setProperty(
+                "weatherdna.aqi.sensitivity",
+                resolvedProfile.getAirQualitySensitivity().name()
         );
 
         Path temporary = Files.createTempFile(
@@ -167,6 +274,8 @@ public final class AppConfig {
         geminiApiKey = safe(aiKey);
 
         FAHRENHEIT.set(fahrenheit);
+        preferenceProfile = resolvedProfile.copy();
+        PREFERENCE_PROFILE_PROPERTY.set(preferenceProfile.copy());
     }
 
     /**
@@ -212,6 +321,15 @@ public final class AppConfig {
         return FAHRENHEIT;
     }
 
+    public static synchronized WeatherPreferenceProfile getWeatherPreferenceProfile() {
+        ensureLoaded();
+        return preferenceProfile.copy();
+    }
+
+    public static ObjectProperty<WeatherPreferenceProfile> weatherPreferenceProfileProperty() {
+        return PREFERENCE_PROFILE_PROPERTY;
+    }
+
     public static Path getConfigFile() {
         return CONFIG_FILE;
     }
@@ -237,6 +355,15 @@ public final class AppConfig {
     private static String safe(String value) {
         return value == null ? "" : value.trim();
     }
+
+    private static double parseDouble(String value, double defaultValue) {
+        if (value == null || value.isBlank()) {
+            return defaultValue;
+        }
+        try {
+            return Double.parseDouble(value.trim());
+        } catch (NumberFormatException ignored) {
+            return defaultValue;
+        }
+    }
 }
-
-

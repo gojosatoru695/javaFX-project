@@ -57,7 +57,7 @@ public class AtmosphereApp extends Application {
         mainController = mainLoader.getController();
 
         Scene scene = new Scene(root, INITIAL_WIDTH, INITIAL_HEIGHT);
-        scene.setFill(Color.web("#0A0F1E"));
+        scene.setFill(Color.web("#0B0F13"));
         addStylesheet(scene, "/com/atmosphere/css/theme.css");
         addStylesheet(scene, "/com/atmosphere/css/animations.css");
 
@@ -78,7 +78,7 @@ public class AtmosphereApp extends Application {
         Label title = new Label("AtmoSphere");
         title.getStyleClass().add("splash-title");
 
-        Label subtitle = new Label("Weather Intelligence");
+        Label subtitle = new Label("Observatory · Weather Intelligence");
         subtitle.getStyleClass().add("splash-subtitle");
 
         ProgressBar progress = new ProgressBar(0.0);
@@ -94,7 +94,7 @@ public class AtmosphereApp extends Application {
         content.setPrefSize(500, 300);
         content.getStyleClass().add("splash-root");
 
-        Scene splashScene = new Scene(content, 500, 300, Color.web("#0A0F1E"));
+        Scene splashScene = new Scene(content, 500, 300, Color.web("#0B0F13"));
         URL theme = getClass().getResource("/com/atmosphere/css/theme.css");
         if (theme != null) splashScene.getStylesheets().add(theme.toExternalForm());
         URL animations = getClass().getResource("/com/atmosphere/css/animations.css");
@@ -158,18 +158,18 @@ public class AtmosphereApp extends Application {
         return createFallbackIcon();
     }
 
-    /** Draw a blue circular weather mark into a WritableImage as a fallback. */
+    /** Draw an observatory circular weather mark into a WritableImage as a fallback. */
     private WritableImage createFallbackIcon() {
         Canvas canvas = new Canvas(64, 64);
         GraphicsContext graphics = canvas.getGraphicsContext2D();
 
-        graphics.setFill(Color.web("#0A0F1E"));
+        graphics.setFill(Color.web("#0B0F13"));
         graphics.fillRect(0, 0, 64, 64);
 
-        graphics.setFill(Color.web("#38BDF8"));
+        graphics.setFill(Color.web("#80D6C5"));
         graphics.fillOval(3, 3, 58, 58);
 
-        graphics.setFill(Color.web("#082F49"));
+        graphics.setFill(Color.web("#141B21"));
         graphics.setFont(Font.font("Segoe UI Emoji", FontWeight.BOLD, 34));
         graphics.setTextAlign(TextAlignment.CENTER);
         graphics.fillText("☁", 32, 43);

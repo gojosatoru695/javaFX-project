@@ -36,11 +36,11 @@ public class AQIController {
     private static final double GAUGE_LEVELS = 5.0;
 
     private static final Color[] AQI_COLORS = {
-            Color.web("#10B981"), // Good
-            Color.web("#F59E0B"), // Fair
-            Color.web("#F97316"), // Moderate
-            Color.web("#EF4444"), // Poor
-            Color.web("#8B5CF6")  // Very Poor
+            Color.web("#80D6C5"), // Good (Observatory Mint)
+            Color.web("#99D8B6"), // Fair
+            Color.web("#F2BB72"), // Moderate (Warm Amber)
+            Color.web("#EF7D7D"), // Poor (Alert Coral)
+            Color.web("#D9534F")  // Very Poor
     };
 
     @FXML private ComboBox<String> citySelector;
@@ -285,7 +285,7 @@ public class AQIController {
                 gc,
                 GAUGE_START,
                 GAUGE_START + GAUGE_SWEEP,
-                Color.web("#263244"),
+                Color.web("#1B252D"),
                 GAUGE_STROKE
         );
 
